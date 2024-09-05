@@ -44,7 +44,8 @@ public class User {
     @Enumerated(EnumType.STRING)
     private Role role;
 
-    @OneToMany
+    @ToString.Exclude
+    @OneToMany(mappedBy = "user")
     private LinkedHashSet<Diary> diaries = new LinkedHashSet<>();
 
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
