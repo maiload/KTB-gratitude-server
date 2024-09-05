@@ -51,10 +51,10 @@ jobs:
           ssh -o StrictHostKeyChecking=no -i hackathon.pem $USER@$TARGET_HOST << EOF
             docker login -u ${{ secrets.DOCKER_HUB_USERNAME }} -p ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
             docker pull ${{ secrets.IMAGE_NAME }}
-            if [ \$(docker ps -a -q -f name=spring-container) ]; then
-              docker stop spring-container || true
-              docker rm spring-container || true
+            if [ \$(docker ps -a -q -f name=gratitude-container) ]; then
+              docker stop gratitude-container || true
+              docker rm gratitude-container || true
             fi
-            docker run -d --name spring-container -p 8080:8080 ${{ secrets.IMAGE_NAME }}
+            docker run -d --name gratitude-container -p 8080:8080 ${{ secrets.IMAGE_NAME }}
           EOF
           rm hackathon.pem
