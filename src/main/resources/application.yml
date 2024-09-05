@@ -1,32 +1,32 @@
-spring:
-  application:
-    name: ktb-gratitude-diary
-  datasource:
-      url: jdbc:mysql://localhost:3306/diary
-      driver-class-name: com.mysql.cj.jdbc.Driver
-      username: root
-      password: root123
-  jpa:
-    properties:
-      hibernate:
-        format_sql: true
-    hibernate:
-      ddl-auto: update
-    open-in-view: false
-    show-sql: true
-
-jwt:
-  secret-key: 5pGTFGANzWT2AeBoJckYOhkhfWTTY39+gooBjLeVlJRa40jOzEVPt1t+ntkd4+iy/7SkhAU5hAq0KTyyNqRiPA==
-  access-expire: 30m
-  refresh-expire: 1h
-
-# ---
 # spring:
-#   config:
-#     activate:
-#       on-profile: prod
+#   application:
+#     name: ktb-gratitude-diary
 #   datasource:
-#     url: ${PROD_URL}
-#     username: ${PROD_USERNAME}
-#     password: ${PROD_PASSWORD}
+#       url: jdbc:mysql://localhost:3306/diary
+#       driver-class-name: com.mysql.cj.jdbc.Driver
+#       username: root
+#       password: root123
+#   jpa:
+#     properties:
+#       hibernate:
+#         format_sql: true
+#     hibernate:
+#       ddl-auto: update
+#     open-in-view: false
+#     show-sql: true
+
+# jwt:
+#   secret-key: 5pGTFGANzWT2AeBoJckYOhkhfWTTY39+gooBjLeVlJRa40jOzEVPt1t+ntkd4+iy/7SkhAU5hAq0KTyyNqRiPA==
+#   access-expire: 30m
+#   refresh-expire: 1h
+
+# # ---
+# # spring:
+# #   config:
+# #     activate:
+# #       on-profile: prod
+# #   datasource:
+# #     url: ${PROD_URL}
+# #     username: ${PROD_USERNAME}
+# #     password: ${PROD_PASSWORD}
 
