@@ -1,36 +1,37 @@
-name: CI/CD Pipeline
+name: Java CI with Gradle
 
 on:
   push:
-    branches:
-      - main
+    branches: [ "main" ]
+
 
 jobs:
   build:
+
     runs-on: ubuntu-latest
 
     steps:
       - name: Check out code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
-      - name: Set up JDK
-        uses: actions/setup-java@v2
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
         with:
           java-version: '17'
-          distribution: 'adopt'
-
-      - name: Grant execute permission for Gradle
-        run: chmod +x gradlew
-
+          distribution: 'temurin'
+          
+      - name: Run chmod to make gradlew executable
+        run: chmod +x ./gradlew
+        
       - name: Build with Gradle
         run: ./gradlew build -x test
-
+          
       - name: Build Docker Image
         run: |
           docker build -t ${{ secrets.IMAGE_NAME }} .
           
       - name: Log in to Docker Hub
-        uses: docker/login-action@v1
+        uses: docker/login-action@v3
         with:
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
@@ -38,23 +39,15 @@ jobs:
       - name: Push Docker Image to Docker Hub
         run: |
           docker push ${{ secrets.IMAGE_NAME }}
-    
-      - name: Deploy to Backend EC2
-        env:
-          TARGET_HOST: ${{ secrets.EC2_HOST }}
-          USER: ${{ secrets.EC2_USER }}
-          SSH_KEY: ${{ secrets.EC2_SSH_KEY }}
-          IMAGE_NAME: ${{ secrets.IMAGE_NAME }}
-        run: |
-          echo "$SSH_KEY" | tr -d '\r' > hackathon.pem
-          chmod 600 hackathon.pem
-          ssh -o StrictHostKeyChecking=no -i hackathon.pem $USER@$TARGET_HOST << EOF
-            docker login -u ${{ secrets.DOCKER_HUB_USERNAME }} -p ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+          
+      - name: Deploy
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USER }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+          port: 22
+          script: |
             docker pull ${{ secrets.IMAGE_NAME }}
-            if [ \$(docker ps -a -q -f name=gratitude-container) ]; then
-              docker stop gratitude-container || true
-              docker rm gratitude-container || true
-            fi
-            docker run -d --name gratitude-container -p 8080:8080 ${{ secrets.IMAGE_NAME }}
-          EOF
-          rm hackathon.pem
+            docker stop gratitude-container
+            docker run -d --rm --name gratitude-container -p 8080:8080 ${{ secrets.IMAGE_NAME }}
