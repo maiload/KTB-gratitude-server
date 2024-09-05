@@ -19,6 +19,17 @@ jobs:
         with:
           java-version: '17'
           distribution: 'temurin'
+
+      # gradle caching - 빌드 시간 향상
+      - name: Gradle Caching
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
           
       - name: Run chmod to make gradlew executable
         run: chmod +x ./gradlew
@@ -26,15 +37,15 @@ jobs:
       - name: Build with Gradle
         run: ./gradlew build -x test
           
-      - name: Build Docker Image
-        run: |
-          docker build -t ${{ secrets.IMAGE_NAME }} .
-          
       - name: Log in to Docker Hub
         uses: docker/login-action@v3
         with:
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+
+      - name: Build Docker Image
+        run: |
+          docker build -t ${{ secrets.IMAGE_NAME }} .
 
       - name: Push Docker Image to Docker Hub
         run: |
@@ -48,6 +59,8 @@ jobs:
           key: ${{ secrets.EC2_SSH_KEY }}
           port: 22
           script: |
-            docker pull ${{ secrets.IMAGE_NAME }}
             docker stop gratitude-container
-            docker run -d --rm --name gratitude-container -p 8080:8080 ${{ secrets.IMAGE_NAME }}
+            docker rm -f gratitude-container
+            docker pull ${{ secrets.IMAGE_NAME }}
+            docker run -d --name gratitude-container -p 8080:8080 ${{ secrets.IMAGE_NAME }}
+            docker image prune -f
