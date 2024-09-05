@@ -16,17 +16,17 @@ spring:
     show-sql: true
 
 jwt:
-  secret-key: ${JWT_SECRET_KEY}
+  secret-key: 5pGTFGANzWT2AeBoJckYOhkhfWTTY39+gooBjLeVlJRa40jOzEVPt1t+ntkd4+iy/7SkhAU5hAq0KTyyNqRiPA==
   access-expire: 30m
   refresh-expire: 1h
 
----
-spring:
-  config:
-    activate:
-      on-profile: prod
-  datasource:
-    url: ${PROD_URL}
-    username: ${PROD_USERNAME}
-    password: ${PROD_PASSWORD}
+# ---
+# spring:
+#   config:
+#     activate:
+#       on-profile: prod
+#   datasource:
+#     url: ${PROD_URL}
+#     username: ${PROD_USERNAME}
+#     password: ${PROD_PASSWORD}
 

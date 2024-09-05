@@ -14,4 +14,5 @@ COPY --from=builder /app/build/libs/gratitude-server-0.0.1.jar app.jar
 
 EXPOSE 8080
 
+# 환경 변수 출력 후 애플리케이션 실행
 CMD ["java", "-Dspring.profiles.active=prod", "-jar", "app.jar"]
