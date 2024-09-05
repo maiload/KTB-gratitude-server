@@ -49,19 +49,15 @@ jobs:
         run: |
           echo "$SSH_KEY" | tr -d '\r' > hackathon.pem
           chmod 600 hackathon.pem
-
-          ssh -o StrictHostKeyChecking=no -i hackathon.pem $USER@$BASTION_HOST << 'EOF'
-            ssh -o StrictHostKeyChecking=no -i hackathon.pem $USER@${{ secrets.EC2_HOST }} << 'INNER_EOF'
+          ssh -t -o StrictHostKeyChecking=no -i hackathon.pem $USER@$BASTION_HOST << 'EOF'
+            ssh -t -o StrictHostKeyChecking=no -i hackathon.pem $USER@${{ secrets.EC2_HOST }} << 'INNER_EOF'
               docker login -u ${{ secrets.DOCKER_HUB_USERNAME }} -p ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
               docker pull ${{ secrets.IMAGE_NAME }}
-
-              if [ $(docker ps -a -q -f name= gratitude-container) ]; then
+              if [ $(docker ps -a -q -f name=gratitude-container) ]; then
                 docker stop gratitude-container || true
                 docker rm gratitude-container || true
               fi
-
               docker run -d --name gratitude-container -p 8080:8080 ${{ secrets.IMAGE_NAME }}
           INNER_EOF
           EOF
-
           rm hackathon.pem
