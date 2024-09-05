@@ -14,4 +14,4 @@ COPY --from=builder /app/build/libs/gratitude-server-0.0.1.jar app.jar
 
 EXPOSE 8080
 
-CMD ["java", "-Dspring.profiles.active=prod", "-jar", "app.jar"]
+CMD ["java", "-Dspring.profiles.active=dev", "-jar", "app.jar"]
