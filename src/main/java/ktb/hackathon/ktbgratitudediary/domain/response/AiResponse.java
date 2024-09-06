@@ -62,7 +62,7 @@ public record AiResponse(
         ) {
             @Override
             public String toString() {
-                return type + ", " + per + ", " + desc;
+                return type + "| " + per + "| " + desc;
             }
         }
     }
