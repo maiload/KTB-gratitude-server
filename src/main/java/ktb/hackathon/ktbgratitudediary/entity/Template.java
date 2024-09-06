@@ -1,5 +1,5 @@
 package ktb.hackathon.ktbgratitudediary.entity;
 
 public enum Template {
-    DEFAULT, UNDERLINE, LARGE_GRID, PARCHMENT
+    DEFAULT, UNDERLINE, SMALL_GRID, LARGE_GRID, PARCHMENT
 }
