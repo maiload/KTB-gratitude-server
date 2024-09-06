@@ -59,8 +59,8 @@ jobs:
           key: ${{ secrets.EC2_SSH_KEY }}
           port: 22
           script: |
-            docker stop gratitude-container
-            docker rm -f gratitude-container
+            docker stop gratitude-container || true
+            docker rm -f gratitude-container || true
             docker pull ${{ secrets.IMAGE_NAME }}
             docker run -d --name gratitude-container -p 8080:8080 ${{ secrets.IMAGE_NAME }}
             docker image prune -f
