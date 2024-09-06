@@ -57,7 +57,6 @@ jobs:
           key: ${{ secrets.EC2_SSH_KEY }}
           port: 22
           script: |
-            cd /home/ubuntu/gratitude-server
             docker stop gratitude-container || true
             docker rm -f gratitude-container || true
             docker pull ${{ secrets.IMAGE_NAME }}:latest
