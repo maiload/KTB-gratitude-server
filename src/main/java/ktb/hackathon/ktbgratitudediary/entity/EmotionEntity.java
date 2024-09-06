@@ -27,8 +27,8 @@ public class EmotionEntity {
     @Column(name = "description")
     private List<String> desc;
 
-    @Column(nullable = false)
-    private String color;
+    @Column
+    private String color = "#000000";
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "diary_id", foreignKey = @ForeignKey(name = "fk_emotion_diary_id"))
