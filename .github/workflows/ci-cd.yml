@@ -43,13 +43,13 @@ jobs:
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
 
-      - name: Build Docker Image
-        run: |
-          docker build -t ${{ secrets.IMAGE_NAME }} .
+      # - name: Build Docker Image
+      #   run: |
+      #     docker build -t ${{ secrets.IMAGE_NAME }} .
 
-      - name: Push Docker Image to Docker Hub
-        run: |
-          docker push ${{ secrets.IMAGE_NAME }}
+      # - name: Push Docker Image to Docker Hub
+      #   run: |
+      #     docker push ${{ secrets.IMAGE_NAME }}
 
       - name: Deploy
         uses: appleboy/ssh-action@v1.0.3
@@ -59,6 +59,8 @@ jobs:
           key: ${{ secrets.EC2_SSH_KEY }}
           port: 22
           script: |
+            docker build -t ${{ secrets.IMAGE_NAME }} .
+            docker push ${{ secrets.IMAGE_NAME }}
             docker stop gratitude-container || true
             docker rm -f gratitude-container || true
             docker pull ${{ secrets.IMAGE_NAME }}

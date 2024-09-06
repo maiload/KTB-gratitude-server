@@ -1,0 +1,9 @@
+spring:
+  profiles:
+    active: prod
+    group:
+      local: local
+      dev: dev
+      prod: prod
+      debug: debug
+
