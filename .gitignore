@@ -16,6 +16,7 @@ build/
 .idea/**/shelf
 
 application.yml
+application-local.yml
 
 # AWS User-specific
 .idea/**/aws.xml
