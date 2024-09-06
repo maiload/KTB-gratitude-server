@@ -8,11 +8,15 @@
 build/
 
 # User-specific stuff
+.idea/**
 .idea/**/workspace.xml
 .idea/**/tasks.xml
 .idea/**/usage.statistics.xml
 .idea/**/dictionaries
 .idea/**/shelf
+
+application.yml
+application-local.yml
 
 # AWS User-specific
 .idea/**/aws.xml
@@ -197,8 +201,12 @@ $RECYCLE.BIN/
 
 ### Gradle ###
 .gradle
-**/build/
+/build/
+/out/
+/target/
+/bin/
 !src/**/build/
+*.class
 
 # Ignore Gradle GUI config
 gradle-app.setting

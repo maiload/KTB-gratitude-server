@@ -93,7 +93,7 @@ public class JwtTokenProvider {
             getClaims(token);
             return true;
         } catch (ExpiredJwtException e) { // 기간 만료
-            return false;
+            throw new JwtTokenException(Error.ACCESS_TOKEN_EXPIRED);
         } catch (Exception e) {
             throw new JwtTokenException(Error.BROKEN_TOKEN);
         }

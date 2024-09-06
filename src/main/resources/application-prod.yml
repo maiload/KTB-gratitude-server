@@ -8,3 +8,6 @@ jwt:
   secret-key: ${JWT_SECRET}
   access-expire: 30m
   refresh-expire: 1h
+
+Ai:
+  request-url: ${AI_SERVER}

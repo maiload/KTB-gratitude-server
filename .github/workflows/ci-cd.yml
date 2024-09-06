@@ -60,7 +60,7 @@ jobs:
             docker stop gratitude-container || true
             docker rm -f gratitude-container || true
             docker pull ${{ secrets.IMAGE_NAME }}:latest
-            docker run -d --name gratitude-container -p 8080:8080 -e DB_URL="${{ secrets.DB_URL }}" -e DB_USERNAME="${{ secrets.DB_USERNAME }}" -e DB_PASSWORD="${{ secrets.DB_PASSWORD }}" -e JWT_SECRET="${{ secrets.JWT_SECRET }}" ${{ secrets.IMAGE_NAME }}:latest
+            docker run -d --name gratitude-container -p 8080:8080 -e DB_URL="${{ secrets.DB_URL }}" -e DB_USERNAME="${{ secrets.DB_USERNAME }}" -e DB_PASSWORD="${{ secrets.DB_PASSWORD }}" -e JWT_SECRET="${{ secrets.JWT_SECRET }}" -e AI_SERVER="${{ secret.AI_SERVER }}" ${{ secrets.IMAGE_NAME }}:latest
             docker image prune -f
 
       # 8. 성공 시 디스코드 알림
