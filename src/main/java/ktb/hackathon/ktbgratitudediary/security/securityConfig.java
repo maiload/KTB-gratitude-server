@@ -46,8 +46,8 @@ public class securityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-            .cors(h -> h
-                    .configurationSource(corsConfigurationSource())) // 로컬 환경
+//            .cors(h -> h
+//                    .configurationSource(corsConfigurationSource())) // 로컬 환경
             .httpBasic(AbstractHttpConfigurer::disable)
             .csrf(AbstractHttpConfigurer::disable)
             .sessionManagement(h ->
