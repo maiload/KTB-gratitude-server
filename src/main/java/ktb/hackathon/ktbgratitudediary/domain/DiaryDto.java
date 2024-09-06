@@ -23,6 +23,7 @@ public record DiaryDto(
         LocalDateTime createdAt
 ) {
     public static DiaryDto of(
+            Long id,
             String title,
             String content,
             UserDto userDto,
@@ -76,7 +77,9 @@ public record DiaryDto(
     }
 
     public static DiaryDto from(Diary diary) {
-        return DiaryDto.of(diary.getTitle(),
+        return DiaryDto.of(
+                diary.getId(),
+                diary.getTitle(),
                 diary.getContent(),
                 UserDto.from(diary.getUser()),
                 diary.getHappiness(),

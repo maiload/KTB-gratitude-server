@@ -14,6 +14,7 @@ public record AiResponse(
 ) {
     public DiaryDto toDto(DiaryRequest diaryRequest, UserDto userDto) {
         return DiaryDto.of(
+                null,
                 diaryRequest.title(),
                 diaryRequest.content(),
                 userDto,

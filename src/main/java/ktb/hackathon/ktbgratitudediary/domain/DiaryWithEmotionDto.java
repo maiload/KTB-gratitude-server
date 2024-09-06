@@ -85,6 +85,7 @@ public record DiaryWithEmotionDto(
 
     public DiaryDto toDto() {
         return DiaryDto.of(
+                id,
                 title,
                 content,
                 userDto,
