@@ -8,6 +8,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.validation.Valid;
 import ktb.hackathon.ktbgratitudediary.domain.request.LogInRequest;
 import ktb.hackathon.ktbgratitudediary.domain.request.SignUpRequest;
 import ktb.hackathon.ktbgratitudediary.domain.security.TokenInfo;
@@ -32,7 +33,7 @@ public class UserController {
             @ApiResponse(responseCode = "400", description = "Invalid input", content = @Content)
     })
     @PostMapping("/sign-up")
-    public ResponseEntity<Void> signUp(@RequestBody SignUpRequest signUpRequest) {
+    public ResponseEntity<Void> signUp(@Valid @RequestBody SignUpRequest signUpRequest) {
         String encodedPassword = passwordEncoder.encode(signUpRequest.password());
         userService.saveUser(signUpRequest.toDto(encodedPassword));
         return SuccessResponse.created();
@@ -45,7 +46,7 @@ public class UserController {
             @ApiResponse(responseCode = "400", description = "Invalid input", content = @Content)
     })
     @PostMapping("/login")
-    public ResponseEntity<Object> login(@RequestBody LogInRequest logInRequest, HttpServletResponse response) {
+    public ResponseEntity<Object> login(@Valid @RequestBody LogInRequest logInRequest, HttpServletResponse response) {
         TokenInfo tokenInfo = userService.logInUser(response, logInRequest.toDto());
         return SuccessResponse.ok(tokenInfo.accessToken());
     }
