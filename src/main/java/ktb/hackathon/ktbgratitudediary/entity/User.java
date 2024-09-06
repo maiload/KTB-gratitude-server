@@ -13,6 +13,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.LinkedHashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Getter
 @ToString
@@ -46,7 +47,7 @@ public class User {
 
     @ToString.Exclude
     @OneToMany(mappedBy = "user")
-    private LinkedHashSet<Diary> diaries = new LinkedHashSet<>();
+    private Set<Diary> diaries = new LinkedHashSet<>();
 
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     @CreatedDate
@@ -61,8 +62,17 @@ public class User {
         this.role = role;
     }
 
-    public static User of(String loginId, String password, LocalDate birthDate, String nickname, Role role) {
-        return new User(loginId, password, birthDate, nickname, role);
+    private User(Long id, String loginId, String password, LocalDate birthDate, String nickname, Role role) {
+        this.id = id;
+        this.loginId = loginId;
+        this.password = password;
+        this.birthDate = birthDate;
+        this.nickname = nickname;
+        this.role = role;
+    }
+
+    public static User of(Long id, String loginId, String password, LocalDate birthDate, String nickname, Role role) {
+        return new User(id, loginId, password, birthDate, nickname, role);
     }
 
     @Override

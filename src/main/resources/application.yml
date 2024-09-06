@@ -15,3 +15,17 @@ spring:
     open-in-view: false
     show-sql: true
 
+
+Ai:
+  request-url: ${AI_SERVER}
+
+---
+spring:
+  config:
+    activate:
+      on-profile: prod
+  datasource:
+    url: ${PROD_URL}
+    username: ${PROD_USERNAME}
+    password: ${PROD_PASSWORD}
+

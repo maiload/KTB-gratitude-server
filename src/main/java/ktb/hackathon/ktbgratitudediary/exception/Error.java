@@ -13,7 +13,8 @@ public enum Error {
     // 401
     BLACKLIST_TOKEN(HttpStatus.UNAUTHORIZED.value(), 4010),
     BROKEN_TOKEN(HttpStatus.UNAUTHORIZED.value(), 4011),
-    CANNOT_FIND_REFRESH_TOKEN_COOKIE(HttpStatus.UNAUTHORIZED.value(), 4012);
+    CANNOT_FIND_REFRESH_TOKEN_COOKIE(HttpStatus.UNAUTHORIZED.value(), 4012),
+    ACCESS_TOKEN_EXPIRED(HttpStatus.UNAUTHORIZED.value(), 4013);
 
     private final int httpStatus;
     private final int detailCode;

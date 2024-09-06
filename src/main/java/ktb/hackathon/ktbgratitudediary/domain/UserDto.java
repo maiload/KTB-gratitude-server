@@ -38,6 +38,6 @@ public record UserDto(
     }
 
     public User toEntity() {
-       return User.of(loginId, password, birthDate, nickname, role);
+       return User.of(id, loginId, password, birthDate, nickname, role);
     }
 }

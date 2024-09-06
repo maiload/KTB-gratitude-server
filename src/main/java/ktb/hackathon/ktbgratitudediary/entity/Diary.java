@@ -10,6 +10,8 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDateTime;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 
 @Getter
@@ -36,7 +38,8 @@ public class Diary {
     @JoinColumn(name = "user_id", foreignKey = @ForeignKey(name = "fk_diary_user_id"))
     private User user;
 
-    private String emotion;
+    @OneToMany(mappedBy = "diary", cascade = CascadeType.ALL)
+    private Set<EmotionEntity> emotionEntities = new LinkedHashSet<>();
 
     private int happiness;
 
@@ -49,8 +52,78 @@ public class Diary {
     @Enumerated(EnumType.STRING)
     private Template template;
 
+    private String rType;
+    private String jType;
+    private String mType;
+    private String dType;
+    private String totalDesc;
+    private String totalTitle;
+
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     @CreatedDate
     @Column(nullable = false, updatable = false)
     private LocalDateTime createdAt;
+
+    public void addEmotionEntities(LinkedHashSet<EmotionEntity> emotionEntities) {
+        this.emotionEntities = emotionEntities;
+    }
+
+    private Diary(String title,
+                String content,
+                User user,
+                int happiness,
+                int weather,
+                String vectorImage,
+                Template template,
+                String rType,
+                String jType,
+                String mType,
+                String dType,
+                String totalDesc,
+                String totalTitle) {
+        this.title = title;
+        this.content = content;
+        this.user = user;
+        this.happiness = happiness;
+        this.weather = weather;
+        this.vectorImage = vectorImage;
+        this.template = template;
+        this.rType = rType;
+        this.jType = jType;
+        this.mType = mType;
+        this.dType = dType;
+        this.totalDesc = totalDesc;
+        this.totalTitle = totalTitle;
+    }
+
+    public static Diary of(
+            Long id,
+            String title,
+            String content,
+            User user,
+            int happiness,
+            int weather,
+            String vectorImage,
+            Template template,
+            String rType,
+            String jType,
+            String mType,
+            String dType,
+            String totalDesc,
+            String totalTitle
+    ) {
+        return new Diary(title,
+                content,
+                user,
+                happiness,
+                weather,
+                vectorImage,
+                template,
+                rType,
+                jType,
+                mType,
+                dType,
+                totalDesc,
+                totalTitle);
+    }
 }
