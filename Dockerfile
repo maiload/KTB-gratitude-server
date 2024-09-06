@@ -32,4 +32,4 @@ ARG JAR_FILE=./build/libs
 COPY ${JAR_FILE}/*.jar app.jar
 
 # 디버그 모드로 Spring Boot 애플리케이션 실행
-ENTRYPOINT ["java", "-jar", "./app.jar", "--spring.profiles.active=prod", "--debug"]
+ENTRYPOINT ["java", "-jar", "./app.jar", "--spring.profiles.active=prod"]
