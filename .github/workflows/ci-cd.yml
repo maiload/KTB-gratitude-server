@@ -65,9 +65,7 @@ jobs:
             docker pull ${{ secrets.IMAGE_NAME }}
 
             echo "Running the Docker container"
-            docker run -d -p 8080:8080 --name gratitude-container \
-              -e JWT_SECRET=${{ secrets.JWT_SECRET }} \
-              ${{ secrets.IMAGE_NAME }}
+            docker run -d -p 8080:8080 --name gratitude-container -e JWT_SECRET=${{ secrets.JWT_SECRET }} ${{ secrets.IMAGE_NAME }} 
 
             echo "Cleaning up unused Docker images"
             docker image prune -f
