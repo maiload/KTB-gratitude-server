@@ -40,7 +40,7 @@ public record DiaryDto(
             LocalDateTime createdAt
     ){
         return new DiaryDto(
-                null,
+                id,
                 title,
                 content,
                 userDto,
