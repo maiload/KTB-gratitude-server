@@ -26,16 +26,9 @@ public class JwtAuthenticationFilter extends GenericFilterBean {
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
-        log.info("RequestURI: {}", request.getRequestURI());
         String token = resolveToken(request);
-        if(token == null) {
-            log.error("AccessToken is Null");
-            ((HttpServletResponse) servletResponse)
-                    .sendError(HttpServletResponse.SC_UNAUTHORIZED, "AccessToken is Null");
-            return;
-        }
 
-        if (jwtTokenProvider.validateToken(token)) {
+        if (token != null && jwtTokenProvider.validateToken(token)) {
             var authentication = jwtTokenProvider.getAuthentication(token);
             SecurityContextHolder.getContext().setAuthentication(authentication);
         }

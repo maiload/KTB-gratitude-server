@@ -95,7 +95,6 @@ public class securityConfig {
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));  // 허용할 메서드 설정
         configuration.setAllowedHeaders(List.of("Authorization", "Content-Type"));  // 허용할 헤더 설정
         configuration.setAllowCredentials(true);  // 쿠키 등 자격 증명 허용
-//        configuration.setAllowCredentials(false);
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);  // 모든 경로에 대해 CORS 설정 적용
