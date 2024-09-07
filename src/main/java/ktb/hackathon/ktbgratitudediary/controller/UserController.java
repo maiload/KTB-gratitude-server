@@ -56,7 +56,7 @@ public class UserController {
             @ApiResponse(responseCode = "204", description = "Logout successful, no content", content = @Content),
             @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content)
     })
-    @GetMapping("/logout")
+    @PostMapping("/logout")
     public ResponseEntity<Void> logout(HttpServletRequest request, HttpServletResponse response) {
         userService.logOutUser(request, response);
         return SuccessResponse.noContent();
@@ -67,7 +67,7 @@ public class UserController {
             @ApiResponse(responseCode = "200", description = "Token reissued successfully", content = @Content(schema = @Schema(implementation = String.class))),
             @ApiResponse(responseCode = "401", description = "Unauthorized", content = @Content),
     })
-    @PostMapping("/reissue")
+    @GetMapping("/reissue")
     public ResponseEntity<Object> reissue(HttpServletRequest request, HttpServletResponse response) {
         TokenInfo tokenInfo = userService.reissueToken(request, response);
         return SuccessResponse.ok(tokenInfo.accessToken());
