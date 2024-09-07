@@ -31,7 +31,7 @@ public class Diary {
     @Column(nullable = false)
     private String title;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 3000)
     private String content;
 
     @ManyToOne(optional = false)
