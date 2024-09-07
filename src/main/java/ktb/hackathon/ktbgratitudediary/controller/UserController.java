@@ -59,7 +59,7 @@ public class UserController {
     @PostMapping("/logout")
     public ResponseEntity<Void> logout(HttpServletRequest request, HttpServletResponse response) {
         userService.logOutUser(request, response);
-        return SuccessResponse.noContent();
+        return SuccessResponse.ok();
     }
 
     @Operation(summary = "토큰 재발급", description = "Reissue a new JWT token using a valid refresh token")
