@@ -12,9 +12,7 @@ public class SuccessResponse {
         return ResponseEntity.ok(data);
     }
 
-    public static ResponseEntity<Void> ok() {
-        return ResponseEntity.ok().build();
-    }
+    public static ResponseEntity<Void> ok() {return ResponseEntity.ok().build(); }
 
     public static ResponseEntity<Void> noContent() {
         return ResponseEntity.noContent().build();

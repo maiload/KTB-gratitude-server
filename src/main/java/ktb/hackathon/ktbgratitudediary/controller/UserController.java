@@ -15,10 +15,12 @@ import ktb.hackathon.ktbgratitudediary.domain.security.TokenInfo;
 import ktb.hackathon.ktbgratitudediary.response.SuccessResponse;
 import ktb.hackathon.ktbgratitudediary.service.UserService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+@Slf4j
 @RestController
 @RequestMapping("/api/v1/users/")
 @RequiredArgsConstructor
@@ -36,6 +38,7 @@ public class UserController {
     public ResponseEntity<Void> signUp(@Valid @RequestBody SignUpRequest signUpRequest) {
         String encodedPassword = passwordEncoder.encode(signUpRequest.password());
         userService.saveUser(signUpRequest.toDto(encodedPassword));
+        log.info("UserController.signUp");
         return SuccessResponse.created();
     }
 
@@ -48,6 +51,7 @@ public class UserController {
     @PostMapping("/login")
     public ResponseEntity<Object> login(@Valid @RequestBody LogInRequest logInRequest, HttpServletResponse response) {
         TokenInfo tokenInfo = userService.logInUser(response, logInRequest.toDto());
+        log.info("UserController.login");
         return SuccessResponse.ok(tokenInfo.accessToken());
     }
 
@@ -59,6 +63,7 @@ public class UserController {
     @PostMapping("/logout")
     public ResponseEntity<Void> logout(HttpServletRequest request, HttpServletResponse response) {
         userService.logOutUser(request, response);
+        log.info("UserController.logout");
         return SuccessResponse.ok();
     }
 
@@ -70,6 +75,7 @@ public class UserController {
     @GetMapping("/reissue")
     public ResponseEntity<Object> reissue(HttpServletRequest request, HttpServletResponse response) {
         TokenInfo tokenInfo = userService.reissueToken(request, response);
+        log.info("UserController.reissue");
         return SuccessResponse.ok(tokenInfo.accessToken());
     }
 }

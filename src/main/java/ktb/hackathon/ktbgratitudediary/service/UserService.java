@@ -19,6 +19,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
 import java.util.Optional;
 
@@ -59,7 +60,7 @@ public class UserService {
 
     private String checkRefreshToken(HttpServletRequest request) {
         String refreshToken = CookieUtil.getSecureCookie(request);
-        if (refreshToken == null) throw new JwtTokenException(Error.CANNOT_FIND_REFRESH_TOKEN_COOKIE);
+        if (!StringUtils.hasText(refreshToken)) throw new JwtTokenException(Error.REFRESH_TOKEN_IS_NULL_OR_EMPTY);
         jwtTokenProvider.validateToken(refreshToken);
         Boolean isBlockedToken = blackListTokenRepository.existsByToken(refreshToken);
         if (isBlockedToken) {

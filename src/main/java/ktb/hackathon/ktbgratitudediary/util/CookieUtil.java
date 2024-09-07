@@ -3,6 +3,8 @@ package ktb.hackathon.ktbgratitudediary.util;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import ktb.hackathon.ktbgratitudediary.exception.Error;
+import ktb.hackathon.ktbgratitudediary.exception.JwtTokenException;
 
 public class CookieUtil {
     private static final String REFRESH_TOKEN = "refreshToken";
@@ -42,6 +44,8 @@ public class CookieUtil {
                     break;
                 }
             }
+        }else{
+            throw new JwtTokenException(Error.CANNOT_FIND_REFRESH_TOKEN_COOKIE);
         }
 
         return refreshToken;
